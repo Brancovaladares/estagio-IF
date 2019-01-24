@@ -1,51 +1,49 @@
 package br.com.iftm.dao;
 
 import java.util.List;
-
-import br.com.iftm.enfity.TipoServico;
+import br.com.iftm.entily.TipoServico;
 
 public interface TipoServicoDAO {
-
-	/**
-	 * Metodo responsavel por persistir o objeto {@ TipoServico} na base de 
-	 * dados.
-	 * 
-	 * @param tipoServico Objeto a ser persistido.
-	 * @return
-	 */
-	
-	TipoServico create(TipoServico tipoServico);
 	
 	/**
-	 * Metodo responsavel por recuperar da base de dados todos os objeto
-	 * {@link TipoServico
-	 * 
-	 * @return Lista de {@ TipoServico}
+	 * Método responsável por persistir o objeto {@link TipoServico} 
+	 * na base de dados.
+	 *  
+	 * @param tipoServico (Objeto a ser persistido)
+	 * @return Objeto persistido
 	 */
-	
-	List<TipoServico> read();
-	
-	/** Metodo responsavel por recuperar da base de dados todos os objeto
-	 * ({@link TipoServico}, cojo seu nome possua parte do paramento Nome.
-	 * 
-	 * @return Lista de {@ TipoServico}
-	 */
-	
-	List<TipoServico> readByName(String nome);
-	
-	/** Metodo responsavel por persistir (atualizar) na base de dados o objeto
-	 * ({@link TipoServico}.
-	 * 
-	 * @return Objeto persistido.
-	 */
-	
-	TipoServico update(TipoServico tipoServico);
-	
-	/** Metodo responsavel por (deletar) da base de dados um objeto
-	 * ({@link TipoServico}.
-	 * 
-	 * @return
-	 */
-	
-	void delete(Integer id);
+	 TipoServico create(TipoServico tipoServico);
+	 
+	 /**
+	  * Método responsavel por recuperar da base de dados todos os objetos
+	  * {@link tipoServico}.
+	  * 
+	  * @return lista de {@link TipoServico}
+	  */
+	 List<TipoServico> read();
+	 
+	 /**
+	  * Método para recuperar base de dados todos os objetos {@link TipoServico}, 
+	  * cujo seu nome possua parte do parametro Nome.
+	  * 
+	  * @param nome
+	  * @return Lista de {@link TipoServico}
+	  */
+	 List<TipoServico> readByName(String nome);
+	 
+	 /**
+	  * Método responsavel por persisitir (atualizar) na base de dados o objeto
+	  * 
+	  * @param tipoServico
+	  * @return Objeto a ser persistido.
+	  */
+	 TipoServico update(TipoServico tipoServico);
+	 
+	 /**
+	  * Método responsavel por excluir da base de dados o objeto referente ao id informado.
+	  * 
+	  * @param id
+	  */
+	 void delete(Integer id);
+	 
 }

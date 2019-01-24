@@ -1,155 +1,190 @@
 package br.com.iftm.business.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import br.com.iftm.business.BusinessException;
+import br.com.iftm.business.BusinessExecption;
 import br.com.iftm.business.PrestadorServicoBusiness;
 import br.com.iftm.dao.PrestadorServicoDAO;
-import br.com.iftm.enfity.PrestadorServico;
-import br.com.iftm.enfity.Telefone;
-import br.com.iftm.enfity.TipoServico;
+import br.com.iftm.entily.Cidade;
+import br.com.iftm.entily.PrestadorServico;
+import br.com.iftm.entily.Telefone;
+import br.com.iftm.entily.TipoServico;
 
+@Service
 public class PrestadorServicoBusinessImpl implements PrestadorServicoBusiness {
 
-	@Autowired
-	private PrestadorServicoDAO dao;
-	private List<PrestadorServico> lista = new ArrayList<>();
+	@Autowired // procura pela classe, evita de instanciar
+	private PrestadorServicoDAO prestadorDao;
 
 	@Override
-	public PrestadorServico create(PrestadorServico prestadorServico) throws BusinessException {
+	public PrestadorServico create(PrestadorServico prestadorServ) throws BusinessExecption {
 
-		if (StringUtils.isEmpty(prestadorServico.getNome())) {
-			throw new BusinessException("Nome Requerido!");
+		// validação se está preenchido ou não, dado obrigatório (objeto é string)
+		if (StringUtils.isEmpty(prestadorServ.getNome())) {
+			throw new BusinessExecption("Nome Requerido!"); // excessão disparada pela camada Business
 		}
 
-		if (prestadorServico.getCidade() == null || prestadorServico.getCidade().getCodigo() == null) {
-			throw new BusinessException("Cidade Requerido!");
+		// dado obrigatório, (objeto se compara com NULL)
+		if (prestadorServ.getCidade().getCodigo() == null) {
+			throw new BusinessExecption("Cidade Requerido!"); // possui chave estrangeira
 		}
 
-		if (prestadorServico.getTipoLogradouro() == null) {
-			throw new BusinessException("Tipo Logradouro Requerido!");
+		// dado obrigatório, (objeto é string)
+		if (StringUtils.isEmpty(prestadorServ.getBairro())) {
+			throw new BusinessExecption("Bairro Requerido!"); // excessão disparada pela camada Business
 		}
 
-		if (StringUtils.isEmpty(prestadorServico.getLogradouro())) {
-			throw new BusinessException("Logradouro Requerido!");
+		// dado obrigatório, (objeto é string)
+		if (StringUtils.isEmpty(prestadorServ.getLogradouro())) {
+			throw new BusinessExecption("Logradouro Requerido!"); // excessão disparada pela camada Business
 		}
 
-		if (StringUtils.isEmpty(prestadorServico.getBairro())) {
-			throw new BusinessException("Bairro Requerido!");
+		// dado obrigatório, (objeto se compara com NULL)
+		if (prestadorServ.getTipoLogradouro() == null) {
+			throw new BusinessExecption("TipoLogradouro Requerido!"); // excessão disparada pela camada Business
 		}
 
-		if (StringUtils.isEmpty(prestadorServico.getCep())) {
-			throw new BusinessException("Cep Requerido!");
+		// dado obrigatório, (objeto é string)
+		if (StringUtils.isEmpty(prestadorServ.getCep())) {
+			throw new BusinessExecption("Cep Requerido!"); // excessão disparada pela camada Business
 		}
 
-		if (prestadorServico.getTelefone() == null || prestadorServico.getTelefone().isEmpty()) {
-			throw new BusinessException("Pelos menos um Telefone é Requerido!");
+		// dado obrigatório, (objeto se compara com NULL)
+		if (prestadorServ.getTelefones() == null || prestadorServ.getTelefones().isEmpty()) {
+			throw new BusinessExecption("Pelo menos um telefone Requerido!"); // possui chave estrangeira
 		}
 
-		for (Telefone telefone : prestadorServico.getTelefone()) {
-
-			if (telefone.getNumero() == null) {
-				throw new BusinessException("Numero Requerido!");
-			}
+		for (Telefone telefone : prestadorServ.getTelefones()) {
 
 			if (telefone.getDdd() == null) {
-				throw new BusinessException("DDD Requerido!");
+				throw new BusinessExecption("DDD Requerido!");
 			}
-
-		}
-
-		if (prestadorServico.getTipoServico() == null || prestadorServico.getTipoServico().isEmpty()) {
-			throw new BusinessException("Tipo Servico Requerido!");
-		}
-
-		for (TipoServico tipoServico : prestadorServico.getTipoServico()) {
-
-			if (tipoServico.getCodigo() == null) {
-				throw new BusinessException("Tipo Servico Requerido!");
-			}
-		}
-
-		return dao.create(prestadorServico);
-	}
-
-	@Override
-	public List<PrestadorServico> read() throws BusinessException {
-
-		return lista;
-	}
-
-	@Override
-	public PrestadorServico update(PrestadorServico prestadorServico) throws BusinessException {
-
-		if (prestadorServico.getCodigo() == null) {
-			throw new BusinessException("Codigo Requerido!");
-		}
-		if (StringUtils.isEmpty(prestadorServico.getNome())) {
-			throw new BusinessException("Nome Requerido!");
-		}
-
-		if (prestadorServico.getCidade() == null || prestadorServico.getCidade().getCodigo() == null) {
-			throw new BusinessException("Cidade Requerido!");
-		}
-
-		if (prestadorServico.getTipoLogradouro() == null) {
-			throw new BusinessException("Tipo Logradouro Requerido!");
-		}
-
-		if (StringUtils.isEmpty(prestadorServico.getLogradouro())) {
-			throw new BusinessException("Logradouro Requerido!");
-		}
-
-		if (StringUtils.isEmpty(prestadorServico.getBairro())) {
-			throw new BusinessException("Bairro Requerido!");
-		}
-
-		if (StringUtils.isEmpty(prestadorServico.getCep())) {
-			throw new BusinessException("Cep Requerido!");
-		}
-
-		if (prestadorServico.getTelefone() == null || prestadorServico.getTelefone().isEmpty()) {
-			throw new BusinessException("Pelos menos um Telefone é Requerido!");
-		}
-
-		for (Telefone telefone : prestadorServico.getTelefone()) {
 
 			if (telefone.getNumero() == null) {
-				throw new BusinessException("Numero Requerido!");
+				throw new BusinessExecption("Número Telefone Requerido!");
 			}
-
-			if (telefone.getDdd() == null) {
-				throw new BusinessException("DDD Requerido!");
-			}
-
 		}
 
-		if (prestadorServico.getTipoServico() == null || prestadorServico.getTipoServico().isEmpty()) {
-			throw new BusinessException("Tipo Servico Requerido!");
+		if (prestadorServ.getTipoServicos() == null || prestadorServ.getTipoServicos().isEmpty()) {
+			throw new BusinessExecption("Pelo menos um tipo de serviço é Requerido");
 		}
 
-		for (TipoServico tipoServico : prestadorServico.getTipoServico()) {
+		for (TipoServico tipoServico : prestadorServ.getTipoServicos()) {
 
 			if (tipoServico.getCodigo() == null) {
-				throw new BusinessException("Tipo Servico Requerido!");
+				throw new BusinessExecption("Código Tipo Serviço Requerido!");
 			}
 		}
 
-		return dao.update(prestadorServico);
+		return prestadorDao.create(prestadorServ); // trata a parte de persistência (via interface)
+	}
 
+	////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public List<PrestadorServico> read() throws BusinessExecption {
+		// chama a camada DAO (dados)
+		return prestadorDao.read();
 	}
 
 	@Override
-	public void delete(Integer id) throws BusinessException {
+	public List<PrestadorServico> readByName(String nome) throws BusinessExecption {
+
+		// validação
+		if (StringUtils.isEmpty(nome)) {
+			throw new BusinessExecption("Nome Requerido!"); // excessão disparada pela camada Business
+		}
+		return prestadorDao.readByName(nome); // trata a parte de persistência (via interface)
+	}
+
+	@Override
+	public List<PrestadorServico> readByCidade(Cidade cidade) throws BusinessExecption { // CORRIGIR
+
+		// validação
+		if (StringUtils.isEmpty(cidade)) {
+			throw new BusinessExecption("Cidade Requerido!"); // excessão disparada pela camada Business
+		}
+		return prestadorDao.readByCidade(cidade); // trata a parte de persistência (via interface)
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public PrestadorServico update(PrestadorServico prestadorServ) throws BusinessExecption {
+
+		if (prestadorServ.getCodigo() == null) {
+			throw new BusinessExecption("Nome Requerido!"); // excessão disparada pela camada Business
+		}
+
+		// dado obrigatório, (objeto se compara com NULL)
+		if (prestadorServ.getCidade().getCodigo() == null) {
+			throw new BusinessExecption("Cidade Requerido!"); // possui chave estrangeira
+		}
+
+		// dado obrigatório, (objeto é string)
+		if (StringUtils.isEmpty(prestadorServ.getBairro())) {
+			throw new BusinessExecption("Bairro Requerido!"); // excessão disparada pela camada Business
+		}
+
+		// dado obrigatório, (objeto é string)
+		if (StringUtils.isEmpty(prestadorServ.getLogradouro())) {
+			throw new BusinessExecption("Logradouro Requerido!"); // excessão disparada pela camada Business
+		}
+
+		// dado obrigatório, (objeto se compara com NULL)
+		if (prestadorServ.getTipoLogradouro() == null) {
+			throw new BusinessExecption("TipoLogradouro Requerido!"); // excessão disparada pela camada Business
+		}
+
+		// dado obrigatório, (objeto é string)
+		if (StringUtils.isEmpty(prestadorServ.getCep())) {
+			throw new BusinessExecption("Cep Requerido!"); // excessão disparada pela camada Business
+		}
+
+		// dado obrigatório, (objeto se compara com NULL)
+		if (prestadorServ.getTelefones() == null || prestadorServ.getTelefones().isEmpty()) {
+			throw new BusinessExecption("Pelo menos um telefone Requerido!"); // possui chave estrangeira
+		}
+
+		for (Telefone telefone : prestadorServ.getTelefones()) {
+
+			if (telefone.getDdd() == null) {
+				throw new BusinessExecption("DDD Requerido!");
+			}
+
+			if (telefone.getNumero() == null) {
+				throw new BusinessExecption("Número Telefone Requerido!");
+			}
+		}
+
+		if (prestadorServ.getTipoServicos() == null || prestadorServ.getTipoServicos().isEmpty()) {
+			throw new BusinessExecption("Pelo menos um tipo de serviço é Requerido");
+		}
+
+		for (TipoServico tipoServico : prestadorServ.getTipoServicos()) {
+
+			if (tipoServico.getCodigo() == null) {
+				throw new BusinessExecption("Código Tipo Serviço Requerido!");
+			}
+		}
+
+		return prestadorDao.update(prestadorServ); // trata a parte de persistência (via interface)
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void delete(Integer id) throws BusinessExecption {
 
 		if (id == null) {
-			throw new BusinessException("Codigo Requerido!");
+
+			throw new BusinessExecption("Nome Requerido!"); // excessão disparada pela camada Business
 		}
-		dao.delete(id);
+		prestadorDao.delete(id); // trata a parte de persistência (via interface)
 	}
 
 }

@@ -2,6 +2,8 @@ package br.com.iftm.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,78 +15,136 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.iftm.business.BusinessException;
+import br.com.iftm.business.BusinessExecption;
 import br.com.iftm.business.PrestadorServicoBusiness;
-import br.com.iftm.enfity.PrestadorServico;
+import br.com.iftm.entily.Cidade;
+import br.com.iftm.entily.PrestadorServico;
 
-@RestController // Habilita classe como um servico rest
-@RequestMapping(value = "/prestadorServico") // Nome do Servico
-
+@RestController // habilita Classe como um servico rest.
+@RequestMapping(value = "/prestadorservico") // Nome do Serviço.
 public class PrestadorServicoRest {
 
-	@Autowired
-	private PrestadorServicoBusiness business;
+	@Autowired // procura pela classe, evita de instanciar
+	private PrestadorServicoBusiness psBusiness; // acessando a classe
 
-	// create
-	@PostMapping()
-	public ResponseEntity<?> create(@RequestBody PrestadorServico prestadorServico) {
+	// CREATE
+	@PostMapping
+	public ResponseEntity<?> create(@RequestBody PrestadorServico prestadorServ) {
+
 		try {
-			prestadorServico = business.create(prestadorServico);
-			return ResponseEntity.ok(prestadorServico);
-		} catch (BusinessException e) {
+			prestadorServ = psBusiness.create(prestadorServ);
+
+			return ResponseEntity.ok(prestadorServ);
+		} catch (BusinessExecption e) {
+
 			e.printStackTrace();
+
+			// mensagem de erro
 			return ResponseEntity.badRequest().body(e);
 		}
 
 	}
 
-	// read
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	// READ
 	@GetMapping
 	public ResponseEntity<?> read() {
 
 		try {
-			List<PrestadorServico> lista = business.read();
-			if (lista.isEmpty()) {
+			List<PrestadorServico> retornaLista = psBusiness.read();
+
+			if (retornaLista.isEmpty()) {
 				return ResponseEntity.notFound().build();
 			} else {
-				return ResponseEntity.ok(lista);
+				// devolve a lista
+				return ResponseEntity.ok(retornaLista);
 			}
 
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return ResponseEntity.badRequest().body(e);
-		}
+		} catch (BusinessExecption e) {
 
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
+		}
 	}
 
-//update
+	// READ BY NAME
+	@GetMapping("/filtro/nome") // rota que será retornada algum dado)
+	public ResponseEntity<?> readByName(@PathParam("nome") String nome) {
 
+		try {
+			List<PrestadorServico> retornaLista = psBusiness.readByName(nome);
+
+			if (retornaLista.isEmpty()) {
+				return ResponseEntity.notFound().build();
+			} else {
+				// devolve a lista
+				return ResponseEntity.ok(retornaLista);
+			}
+
+		} catch (BusinessExecption e) {
+
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
+		}
+	}
+
+	// READ BY CIDADE (buscar por cidade)
+	@GetMapping("/filtro/cidade") // rota que será retornada algum dado
+	public ResponseEntity<?> readByCidade(@PathParam("cidade") Cidade cidade) {
+
+		try {
+			List<PrestadorServico> retornaCidade = psBusiness.readByCidade(cidade);
+
+			if (retornaCidade == null || retornaCidade.isEmpty()) {
+				return ResponseEntity.notFound().build();
+			} else {
+				// devolve a lista
+				return ResponseEntity.ok(retornaCidade);
+			}
+
+		} catch (BusinessExecption e) {
+			// mensagem de erro
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	// UPDATE
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody PrestadorServico prestadorServico) throws BusinessException {
+	public ResponseEntity<?> update(@RequestBody PrestadorServico prestadorServ) {
 
 		try {
-			prestadorServico = business.update(prestadorServico);
-			return ResponseEntity.ok(prestadorServico);
-		} catch (BusinessException e) {
+			prestadorServ = psBusiness.update(prestadorServ);
+
+			// devolve o objeto criado
+			return ResponseEntity.ok(prestadorServ);
+		} catch (BusinessExecption e) {
+
 			e.printStackTrace();
+			// mensagem de erro
 			return ResponseEntity.badRequest().body(e);
 		}
 
 	}
 
-	// Delete
+	//////////////////////////////////////////////////////////////////////////////////////////////
 
-	@DeleteMapping(value = "/{id}")
+	// DELETE
+	@DeleteMapping(value = "/{id}") // deletando pelo código, no caso ID
 	public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+
 		try {
-			business.delete(id);
+			psBusiness.delete(id);
 			return ResponseEntity.ok().build();
-		} catch (BusinessException e) {
+
+		} catch (BusinessExecption e) {
+
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e);
 		}
-
 	}
 
 }

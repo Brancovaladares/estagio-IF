@@ -2,44 +2,21 @@ package br.com.iftm.dao;
 
 import java.util.List;
 
-import br.com.iftm.enfity.PrestadorServico;
+import br.com.iftm.entily.Cidade;
+import br.com.iftm.entily.PrestadorServico;
 
 public interface PrestadorServicoDAO {
 
-	/**
-	 * Metodo responsavel por persistir o objeto {@ PrestadorServico} na base de
-	 * dados.
-	 * 
-	 * @param PrestadorServico Objeto a ser persistido.
-	 * @return
-	 */
-
-	PrestadorServico create(PrestadorServico prestadorServico);
-
-	/**
-	 * Metodo responsavel por recuperar da base de dados todos os objeto
-	 * {@link PrestadorServico
-	 * 
-	 * @return Lista de {@ PrestadorServico}
-	 */
+	PrestadorServico create(PrestadorServico prestadorServ);
 
 	List<PrestadorServico> read();
 
-	/**
-	 * Metodo responsavel por recuperar da base de dados todos os objeto
-	 * ({@link PrestadorServico}, cojo seu nome possua parte do paramento Nome.
-	 * 
-	 * @return Lista de {@ PrestadorServico}
-	 */
+	List<PrestadorServico> readByName(String nome);
 
-	PrestadorServico update(PrestadorServico cidade);
+	List<PrestadorServico> readByCidade(Cidade cidade);
 
-	/**
-	 * Metodo responsavel por (deletar) da base de dados um objeto
-	 * ({@link PrestadorServico}.
-	 * 
-	 * @return
-	 */
+	PrestadorServico update(PrestadorServico prestadorServ);
 
 	void delete(Integer id);
+
 }

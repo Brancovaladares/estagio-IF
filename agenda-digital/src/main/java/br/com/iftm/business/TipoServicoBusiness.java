@@ -2,28 +2,36 @@ package br.com.iftm.business;
 
 import java.util.List;
 
-import br.com.iftm.enfity.TipoServico;
+import br.com.iftm.entily.TipoServico;
 
 public interface TipoServicoBusiness {
 
 	/**
-	 * Metodo responsavel por garantir os parametros obrigatorios, bem como
-	 * solicitar a camada de acesso a dados que persista o objeto
-	 * ({@link TipoServico}.
+	 * Método responsavel por garantr os parametros obrigatórios, bem como solicitar
+	 * a camada de acesso a dados que persista o objeto
 	 * 
-	 * @param TipoServico Objeto a ser persistido.
-	 * @return Objeto persistido.
-	 * @throws BusinessException
+	 * @param tipoServico
+	 * @return
 	 */
+	TipoServico create(TipoServico tipoServico) throws BusinessExecption;
 
-	TipoServico create(TipoServico tipoServico) throws BusinessException;
+	/**
+	 * 
+	 */
+	List<TipoServico> read() throws BusinessExecption;
 
-	List<TipoServico> read() throws BusinessException;
+	/**
+	 * 
+	 */
+	List<TipoServico> readByName(String nome) throws BusinessExecption;
 
-	List<TipoServico> readByName(String nome) throws BusinessException;
+	/**
+	 * 
+	 */
+	TipoServico update(TipoServico tipoServico) throws BusinessExecption;
 
-	TipoServico update(TipoServico tipoServico) throws BusinessException;
-
-	void delete(Integer id) throws BusinessException;
-
+	/**
+	 * 
+	 */
+	void delete(Integer id) throws BusinessExecption;
 }

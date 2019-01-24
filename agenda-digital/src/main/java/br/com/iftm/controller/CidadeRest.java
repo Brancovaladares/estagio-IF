@@ -1,6 +1,5 @@
 package br.com.iftm.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.websocket.server.PathParam;
@@ -16,102 +15,108 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.iftm.business.BusinessException;
+import br.com.iftm.business.BusinessExecption;
 import br.com.iftm.business.CidadeBusiness;
-import br.com.iftm.enfity.Cidade;
-import br.com.iftm.enfity.enums.Estado;
+import br.com.iftm.entily.Cidade;
+import br.com.iftm.entily.enums.Estado;
 
-@RestController // Habilita classe como uma cidade rest
-@RequestMapping(value = "/cidade") // Nome da cidade
+@RestController // habilita Classe como um servico rest.
+@RequestMapping(value = "/cidade") // Nome do Serviço.
 
 public class CidadeRest {
 
-	@Autowired
-	private CidadeBusiness business;
-	private List<Cidade> lista = new ArrayList<>();
-	private int indice = 0;
+	@Autowired // procura pela classe, evita de instanciar
+	private CidadeBusiness cidadeBusiness; // acessando a classe
 
-	// create
-	@PostMapping()
+	// CREATE
+	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Cidade cidade) {
+
 		try {
-			cidade = business.create(cidade);
+			cidade = cidadeBusiness.create(cidade);
 			return ResponseEntity.ok(cidade);
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 			e.printStackTrace();
+			// mensagem de erro
 			return ResponseEntity.badRequest().body(e);
 		}
-
 	}
 
-	// read
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	// READ
 	@GetMapping
 	public ResponseEntity<?> read() {
 
 		try {
-			List<Cidade> lista = business.read();
-			if (lista.isEmpty()) {
+			List<Cidade> retorna = cidadeBusiness.read();
+
+			if (retorna.isEmpty()) {
 				return ResponseEntity.notFound().build();
 			} else {
-				return ResponseEntity.ok(lista);
+				// devolve a lista
+				return ResponseEntity.ok(retorna);
 			}
 
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body(e);
+			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
 		}
 
 	}
 
-	// readByName
-
-	@GetMapping("/filtro/estado")
+	// READ BY ESTADO (buscar por estado)
+	@GetMapping("/filtro/estado") // rota que será retornada algum dado
 	public ResponseEntity<?> readByEstado(@PathParam("estado") Estado estado) {
 
 		try {
-			List<Cidade> lista = business.readByEstado(estado);
-			if (lista.isEmpty()) {
+			List<Cidade> retornaEstado = cidadeBusiness.readByEstado(estado);
+
+			if (retornaEstado == null || retornaEstado.isEmpty()) {
 				return ResponseEntity.notFound().build();
 			} else {
-				return ResponseEntity.ok(lista);
+				// devolve a lista
+				return ResponseEntity.ok(retornaEstado);
 			}
 
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
+		} catch (BusinessExecption e) {
+			// mensagem de erro
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body(e);
+			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
 		}
-
 	}
 
-//update
+	//////////////////////////////////////////////////////////////////////////////////////////////
 
+	// UPDATE
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody Cidade cidade) throws BusinessException {
+	public ResponseEntity<?> update(@RequestBody Cidade cidade) {
 
 		try {
-			cidade = business.update(cidade);
+			cidade = cidadeBusiness.update(cidade);
+
+			// devolve o objeto criado
 			return ResponseEntity.ok(cidade);
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 			e.printStackTrace();
+			// mensagem de erro
 			return ResponseEntity.badRequest().body(e);
 		}
-
 	}
 
-	// Delete
-
-	@DeleteMapping(value = "/{id}")
+	// DELETE
+	@DeleteMapping(value = "/{id}") // deletando pelo código, no caso ID
 	public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+
 		try {
-			business.delete(id);
+			cidadeBusiness.delete(id);
 			return ResponseEntity.ok().build();
-		} catch (BusinessException e) {
+
+		} catch (BusinessExecption e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e);
 		}
-
 	}
 
 }

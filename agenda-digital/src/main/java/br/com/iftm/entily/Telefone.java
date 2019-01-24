@@ -1,11 +1,13 @@
-package br.com.iftm.enfity;
+package br.com.iftm.entily;
 
+import javax.persistence.Entity;
+
+@Entity // persistencia
 public class Telefone {
 
 	private Integer codigo;
 	private Integer ddd;
 	private Integer numero;
-	private PrestadorServico prestadorServico;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -29,14 +31,6 @@ public class Telefone {
 
 	public void setNumero(Integer numero) {
 		this.numero = numero;
-	}
-
-	public PrestadorServico getPrestadorServico() {
-		return prestadorServico;
-	}
-
-	public void setPrestadorServico(PrestadorServico prestadorServico) {
-		this.prestadorServico = prestadorServico;
 	}
 
 }

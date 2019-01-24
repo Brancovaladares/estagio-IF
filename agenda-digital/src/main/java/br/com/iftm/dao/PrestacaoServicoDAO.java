@@ -2,36 +2,34 @@ package br.com.iftm.dao;
 
 import java.util.List;
 
-import br.com.iftm.entily.Cidade;
-import br.com.iftm.entily.enums.Estado;
+import br.com.iftm.entily.PrestacaoServico;
 
-public interface CidadeDAO {
+public interface PrestacaoServicoDAO {
 
 	/**
-	 * Método responsável por persistir o objeto {@link Cidade} na base de dados.
+	 * Método responsável por persistir o objeto {@link PrestacaoServico} na base de
+	 * dados.
 	 * 
-	 * @param cidade (Objeto a ser persistido)
+	 * @param prestacaoServico (Objeto a ser persistido)
 	 * @return Objeto persistido
 	 */
-	Cidade create(Cidade cidade);
+	PrestacaoServico create(PrestacaoServico prestacaoServico);
 
 	/**
 	 * Método responsavel por recuperar da base de dados todos os objetos
 	 * {@link cidade}.
 	 * 
-	 * @return lista de {@link Cidade}
+	 * @return lista de {@link PrestacaoServico}
 	 */
-	List<Cidade> read();
-
-	List<Cidade> readByEstado(Estado estado);
+	List<PrestacaoServico> read();
 
 	/**
 	 * Método responsavel por persisitir (atualizar) na base de dados o objeto
 	 * 
-	 * @param cidade
+	 * @param prestacaoServico
 	 * @return Objeto a ser persistido.
 	 */
-	Cidade update(Cidade cidade);
+	PrestacaoServico update(PrestacaoServico prestacaoServico);
 
 	/**
 	 * Método responsavel por excluir da base de dados o objeto referente ao id
