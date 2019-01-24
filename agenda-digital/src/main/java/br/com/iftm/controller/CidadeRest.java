@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.iftm.business.BusinessExecption;
+import br.com.iftm.business.BusinessException;
 import br.com.iftm.business.CidadeBusiness;
 import br.com.iftm.entily.Cidade;
 import br.com.iftm.entily.enums.Estado;
@@ -35,7 +35,7 @@ public class CidadeRest {
 		try {
 			cidade = cidadeBusiness.create(cidade);
 			return ResponseEntity.ok(cidade);
-		} catch (BusinessExecption e) {
+		} catch (BusinessException e) {
 			e.printStackTrace();
 			// mensagem de erro
 			return ResponseEntity.badRequest().body(e);
@@ -58,7 +58,7 @@ public class CidadeRest {
 				return ResponseEntity.ok(retorna);
 			}
 
-		} catch (BusinessExecption e) {
+		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
@@ -80,7 +80,7 @@ public class CidadeRest {
 				return ResponseEntity.ok(retornaEstado);
 			}
 
-		} catch (BusinessExecption e) {
+		} catch (BusinessException e) {
 			// mensagem de erro
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
@@ -98,7 +98,7 @@ public class CidadeRest {
 
 			// devolve o objeto criado
 			return ResponseEntity.ok(cidade);
-		} catch (BusinessExecption e) {
+		} catch (BusinessException e) {
 			e.printStackTrace();
 			// mensagem de erro
 			return ResponseEntity.badRequest().body(e);
@@ -113,7 +113,7 @@ public class CidadeRest {
 			cidadeBusiness.delete(id);
 			return ResponseEntity.ok().build();
 
-		} catch (BusinessExecption e) {
+		} catch (BusinessException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e);
 		}

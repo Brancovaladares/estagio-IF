@@ -13,16 +13,16 @@ public interface CidadeBusiness {
 	 * 
 	 * @param cidade
 	 * @return
-	 * @throws BusinessExecption
+	 * @throws BusinessException
 	 */
-	Cidade create(Cidade cidade) throws BusinessExecption;
+	Cidade create(Cidade cidade) throws BusinessException;
 
-	List<Cidade> read() throws BusinessExecption;
+	List<Cidade> read() throws BusinessException;
 
-	List<Cidade> readByEstado(Estado estado) throws BusinessExecption;
+	List<Cidade> readByEstado(Estado estado) throws BusinessException;
 
-	Cidade update(Cidade cidade) throws BusinessExecption;
+	Cidade update(Cidade cidade) throws BusinessException;
 
-	void delete(Integer id) throws BusinessExecption;
+	void delete(Integer id) throws BusinessException;
 
 }

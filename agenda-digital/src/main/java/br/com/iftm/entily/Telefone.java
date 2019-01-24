@@ -2,7 +2,7 @@ package br.com.iftm.entily;
 
 import javax.persistence.Entity;
 
-@Entity // persistencia
+
 public class Telefone {
 
 	private Integer codigo;

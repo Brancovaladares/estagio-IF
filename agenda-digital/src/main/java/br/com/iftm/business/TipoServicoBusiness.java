@@ -13,25 +13,25 @@ public interface TipoServicoBusiness {
 	 * @param tipoServico
 	 * @return
 	 */
-	TipoServico create(TipoServico tipoServico) throws BusinessExecption;
+	TipoServico create(TipoServico tipoServico) throws BusinessException;
 
 	/**
 	 * 
 	 */
-	List<TipoServico> read() throws BusinessExecption;
+	List<TipoServico> read() throws BusinessException;
 
 	/**
 	 * 
 	 */
-	List<TipoServico> readByName(String nome) throws BusinessExecption;
+	List<TipoServico> readByName(String nome) throws BusinessException;
 
 	/**
 	 * 
 	 */
-	TipoServico update(TipoServico tipoServico) throws BusinessExecption;
+	TipoServico update(TipoServico tipoServico) throws BusinessException;
 
 	/**
 	 * 
 	 */
-	void delete(Integer id) throws BusinessExecption;
+	void delete(Integer id) throws BusinessException;
 }

@@ -7,7 +7,6 @@ import javax.persistence.Table;
 
 import br.com.iftm.entily.enums.TipoLogradouro;
 
-@Entity // persistencia
 
 public class PrestadorServico {
 

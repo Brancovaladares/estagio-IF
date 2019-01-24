@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 
 import br.com.iftm.entily.enums.Estado;
 
-@Entity
 public class Cidade {
 
 	private Integer codigo;

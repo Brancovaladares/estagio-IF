@@ -5,6 +5,8 @@ package br.com.iftm.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.com.iftm.dao.TipoServicoDAO;
@@ -13,6 +15,8 @@ import br.com.iftm.entily.TipoServico;
 @Repository
 public class TipoServicoDAOImpl implements TipoServicoDAO {
 
+	@Autowired
+	private SessionFactory sessionFactory;
 	private List<TipoServico> lista = new ArrayList<>();
 	private int indice = 0;
 
@@ -25,11 +29,8 @@ public class TipoServicoDAOImpl implements TipoServicoDAO {
 	@Override
 	public TipoServico create(TipoServico tipoServico) {
 
-		// numero do codigo em sequencia
-		tipoServico.setCodigo(indice++);
-
-		// envia para a lista
-		lista.add(tipoServico);
+		sessionFactory.getCurrentSession().save(tipoServico);
+		sessionFactory.getCurrentSession().flush();
 
 		return tipoServico;
 	}
@@ -57,11 +58,8 @@ public class TipoServicoDAOImpl implements TipoServicoDAO {
 	@Override
 	public TipoServico update(TipoServico tipoServico) {
 
-		for (TipoServico tipoServico2 : lista) {
-			if (tipoServico2.getCodigo().equals(tipoServico.getCodigo())) {
-				tipoServico2.setNome(tipoServico.getNome());
-			}
-		}
+		sessionFactory.getCurrentSession().update(tipoServico);
+		sessionFactory.getCurrentSession().flush();
 
 		return tipoServico;
 	}

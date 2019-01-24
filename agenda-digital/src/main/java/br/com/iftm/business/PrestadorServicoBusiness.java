@@ -14,16 +14,16 @@ public interface PrestadorServicoBusiness {
 	 * @param prestadorServ
 	 * @return
 	 */
-	PrestadorServico create(PrestadorServico prestadorServ) throws BusinessExecption;
+	PrestadorServico create(PrestadorServico prestadorServ) throws BusinessException;
 
-	List<PrestadorServico> read() throws BusinessExecption;
+	List<PrestadorServico> read() throws BusinessException;
 
-	List<PrestadorServico> readByName(String nome) throws BusinessExecption;
+	List<PrestadorServico> readByName(String nome) throws BusinessException;
 
-	List<PrestadorServico> readByCidade(Cidade cidade) throws BusinessExecption;
+	List<PrestadorServico> readByCidade(Cidade cidade) throws BusinessException;
 
-	PrestadorServico update(PrestadorServico prestadorServ) throws BusinessExecption;
+	PrestadorServico update(PrestadorServico prestadorServ) throws BusinessException;
 
-	void delete(Integer id) throws BusinessExecption;
+	void delete(Integer id) throws BusinessException;
 
 }
