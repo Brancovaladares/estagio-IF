@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.iftm.business.BusinessException;
+import br.com.iftm.business.BusinessExecption;
 import br.com.iftm.business.PrestadorServicoBusiness;
-import br.com.iftm.entily.Cidade;
+import br.com.iftm.controller.dto.FiltroPrestado;
 import br.com.iftm.entily.PrestadorServico;
 
 @RestController // habilita Classe como um servico rest.
@@ -35,7 +35,7 @@ public class PrestadorServicoRest {
 			prestadorServ = psBusiness.create(prestadorServ);
 
 			return ResponseEntity.ok(prestadorServ);
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 
 			e.printStackTrace();
 
@@ -61,7 +61,27 @@ public class PrestadorServicoRest {
 				return ResponseEntity.ok(retornaLista);
 			}
 
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
+
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
+		}
+	}
+
+	@PostMapping("/filtros")
+	public ResponseEntity<?> readByFiltros(@RequestBody FiltroPrestado filtroPrestado) {
+
+		try {
+			List<PrestadorServico> retornaLista = psBusiness.readByFiltros(filtroPrestado);
+
+			if (retornaLista.isEmpty()) {
+				return ResponseEntity.notFound().build();
+			} else {
+				// devolve a lista
+				return ResponseEntity.ok(retornaLista);
+			}
+
+		} catch (BusinessExecption e) {
 
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
@@ -82,29 +102,8 @@ public class PrestadorServicoRest {
 				return ResponseEntity.ok(retornaLista);
 			}
 
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 
-			e.printStackTrace();
-			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
-		}
-	}
-
-	// READ BY CIDADE (buscar por cidade)
-	@GetMapping("/filtro/cidade") // rota que será retornada algum dado
-	public ResponseEntity<?> readByCidade(@PathParam("cidade") Cidade cidade) {
-
-		try {
-			List<PrestadorServico> retornaCidade = psBusiness.readByCidade(cidade);
-
-			if (retornaCidade == null || retornaCidade.isEmpty()) {
-				return ResponseEntity.notFound().build();
-			} else {
-				// devolve a lista
-				return ResponseEntity.ok(retornaCidade);
-			}
-
-		} catch (BusinessException e) {
-			// mensagem de erro
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
 		}
@@ -121,7 +120,7 @@ public class PrestadorServicoRest {
 
 			// devolve o objeto criado
 			return ResponseEntity.ok(prestadorServ);
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 
 			e.printStackTrace();
 			// mensagem de erro
@@ -140,7 +139,7 @@ public class PrestadorServicoRest {
 			psBusiness.delete(id);
 			return ResponseEntity.ok().build();
 
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e);

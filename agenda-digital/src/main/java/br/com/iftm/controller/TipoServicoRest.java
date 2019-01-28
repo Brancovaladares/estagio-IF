@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.iftm.business.BusinessException;
+import br.com.iftm.business.BusinessExecption;
 import br.com.iftm.business.TipoServicoBusiness;
 import br.com.iftm.entily.TipoServico;
 
@@ -37,7 +37,7 @@ public class TipoServicoRest {
 
 			// devolve o objeto criado
 			return ResponseEntity.ok(tipoServico);
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 			e.printStackTrace();
 
 			// mensagem de erro
@@ -61,7 +61,7 @@ public class TipoServicoRest {
 				return ResponseEntity.ok(retornaLista);
 			}
 
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 			// mensagem de erro
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
@@ -84,7 +84,7 @@ public class TipoServicoRest {
 				return ResponseEntity.ok(retornaLista);
 			}
 
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 			// mensagem de erro
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e); // retorna um codigo de badRequest
@@ -94,7 +94,7 @@ public class TipoServicoRest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	// UPDATE
-	@PutMapping()
+	@PutMapping
 	public ResponseEntity<?> update(@RequestBody TipoServico tipoServico) { // requestBody está vindo no corpo da
 																			// requisição
 
@@ -104,7 +104,7 @@ public class TipoServicoRest {
 
 			// devolve o objeto criado
 			return ResponseEntity.ok(tipoServico);
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 			e.printStackTrace();
 			// mensagem de erro
 			return ResponseEntity.badRequest().body(e);
@@ -121,7 +121,7 @@ public class TipoServicoRest {
 			business.delete(id);
 			return ResponseEntity.ok().build();
 
-		} catch (BusinessException e) {
+		} catch (BusinessExecption e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e);
 		}
